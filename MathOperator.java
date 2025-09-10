@@ -8,6 +8,15 @@ public class MathOperator extends AFD{
             case '+':
                 code.next();
                 return new Token("PLUS", "+");
+            case '-':
+                code.next();
+                return new Token("MINUS", "-");
+            case '*':
+                code.next();
+                return new Token("MULT", "*");
+            case '/':
+                code.next();
+                return new Token("DIV", "/");
 
             case CharacterIterator.DONE: // fim do arquivo
                 return new Token("EOF", "$");

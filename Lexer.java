@@ -14,6 +14,9 @@ public class Lexer{
         afds = new ArrayList<>();
         this.code = new StringCharacterIterator(code);
         afds.add(new MathOperator());
+        afds.add(new Number());
+        afds.add(new Comentario());
+        afds.add(new Texto());
     }
 
     public void skipWhiteSpace(){

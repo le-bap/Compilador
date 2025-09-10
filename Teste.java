@@ -11,7 +11,7 @@ public class Teste{
         // System.out.println(op);
         // System.out.println(num2);
 
-        String code = "++   + ";
+        String code = "5.6+ 6- 7.6  * -2  @ fazendo um comentario     @";
         Lexer lexer = new Lexer(code);
         List<Token> tokens = lexer.getTokens();
         for (Token t: tokens) {
