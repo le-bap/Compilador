@@ -13,19 +13,34 @@ public abstract class AFD{
             return true;
         }
 
-        if (current == 'i' && proximoChar(code) == 'n' && proximoChar(code) == 'g'
-        && proximoChar(code) == 'r' && proximoChar(code) == 'e' && proximoChar(code) == 'd'
-        && proximoChar(code) == 'i' && proximoChar(code) == 'e' && proximoChar(code) == 'n'
-        && proximoChar(code) == 't' && proximoChar(code) == 'e'){
+        if (verificarPalavra(code, "ingrediente")){
             return true;
         } 
-        
-            return false;
+        if (verificarPalavra(code, "tempero")){
+            return true;
+        }
+        if (verificarPalavra(code, "receitinha")){
+            return true;
+        }
+
+        return false;
     }
     
-    private char proximoChar(CharacterIterator code) {
-        char next = code.next();
-        code.previous(); // volta para onde estava
-        return next;
+    // private char proximoChar(CharacterIterator code) {
+    //     char next = code.next();
+    //     code.previous(); // volta para onde estava
+    //     return next;
+    // }
+
+     public static boolean verificarPalavra(CharacterIterator code, String word) {
+        int pos = code.getIndex(); // salva posição atual
+        for (int i = 0; i < word.length(); i++) {
+            if (code.current() != word.charAt(i)) { // verifico se o prox char eh diferente do esperado
+                code.setIndex(pos);
+                return false;
+            }
+            code.next(); // se nao for, avanço no texto
+        }
+        return true; // casou a palavra toda
     }
 }

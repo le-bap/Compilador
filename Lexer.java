@@ -18,6 +18,8 @@ public class Lexer{
         afds.add(new Comentario());
         afds.add(new Texto());
         afds.add(new Ingrediente());
+        afds.add(new Tempero());
+        afds.add(new Receitinha());
     }
 
     public void skipWhiteSpace(){
