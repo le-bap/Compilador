@@ -9,10 +9,10 @@ public abstract class AFD{
 
         if (current == ' ' || current == '+' || current == '-' || current == '*' ||
         current == '/' || current == '(' || current == ')' || current == '@' ||
-        current == '\n' || current == CharacterIterator.DONE){
+        current == '\n' || current == '\"' || current == CharacterIterator.DONE){
             return true;
         }
-        
+
         if (current == 'i' && proximoChar(code) == 'n' && proximoChar(code) == 'g'
         && proximoChar(code) == 'r' && proximoChar(code) == 'e' && proximoChar(code) == 'd'
         && proximoChar(code) == 'i' && proximoChar(code) == 'e' && proximoChar(code) == 'n'

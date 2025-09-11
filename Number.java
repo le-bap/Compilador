@@ -14,11 +14,11 @@ public class Number extends AFD{
                 number+=readNumber(code);
 
                 if (isTokenSeparator(code)){
-                    return new Token("tempero", number); // fracionario
+                    return new Token("DECIMAL", number); 
                 }
             }
               if (isTokenSeparator(code)) {
-                return new Token("ingrediente", number); // inteiro
+                return new Token("INTEIRO", number); 
             }
         }
 
