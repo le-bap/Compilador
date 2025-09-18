@@ -8,6 +8,7 @@ public class Lexer{
     private List<Token> tokens;
     private List<AFD> afds;
     private CharacterIterator code;
+    private int linha = 1;
 
     public Lexer(String code){
         tokens = new ArrayList<>();
@@ -17,20 +18,25 @@ public class Lexer{
         afds.add(new Number());
         afds.add(new Comentario());
         afds.add(new Texto());
-        afds.add(new Ingrediente());
-        afds.add(new Tempero());
-        afds.add(new Receitinha());
+        afds.add(new PontoEVirgula());
+        afds.add(new Palavras());
     }
 
     public void skipWhiteSpace(){
-        while(code.current() == ' ' || code.current() == '\n'){
+        while(code.current() == ' ' || code.current() == '\n' || code.current() == '\r'){
+            if (code.current() == '\n') {
+                linha++; 
+            }
             code.next();
         }
     }
 
     public void error(){
-        throw new RuntimeException("Token no recognized: " + code.current());
         // implementar a linha q deu erro
+        int idx = code.getIndex();
+        System.out.println("Character not recognized in index: " + idx);
+        System.out.println("Line: " + linha);
+
     }
 
     private Token searchNextToken(){
@@ -49,6 +55,7 @@ public class Lexer{
             skipWhiteSpace();
             t = searchNextToken();
             if (t == null) error();
+
             tokens.add(t);
 
         }while (!t.tipo.equals("EOF"));

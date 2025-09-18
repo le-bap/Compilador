@@ -1,14 +1,27 @@
 import java.util.List;
-public class Teste{
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
-    public static void main(String[] args){
+public class Teste {
 
-        String code = "5.6+ 6- 7.6  * -2  @ fazendo um comentario     @ \"saindo do comentario\" ingrediente tempero";
-        
-        Lexer lexer = new Lexer(code);
-        List<Token> tokens = lexer.getTokens();
-        for (Token t: tokens) {
-            System.out.println(t);
+    public static void main(String[] args) {
+        try {
+            System.out.println("Lista de tokens");
+            // Lê todo o conteúdo do arquivo em uma String
+            Path path = Path.of("testando-scripts.txt");
+            String conteudo = Files.readString(path, StandardCharsets.UTF_8);
+
+            Lexer lexer = new Lexer(conteudo);
+            List<Token> tokens = lexer.getTokens();
+
+            for (Token t : tokens) {
+                System.out.println(t);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
