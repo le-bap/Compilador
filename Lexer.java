@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.text.StringCharacterIterator;
 import java.text.CharacterIterator;
@@ -18,8 +19,8 @@ public class Lexer{
         afds.add(new Number());
         afds.add(new Comentario());
         afds.add(new Texto());
-        afds.add(new PontoEVirgula());
         afds.add(new Palavras());
+        afds.add(new Caracteres());
     }
 
     public void skipWhiteSpace(){
@@ -36,7 +37,7 @@ public class Lexer{
         int idx = code.getIndex();
         System.out.println("Character not recognized in index: " + idx);
         System.out.println("Line: " + linha);
-
+        throw new RuntimeException("Error: Token not recognized: "+ code.current());
     }
 
     private Token searchNextToken(){

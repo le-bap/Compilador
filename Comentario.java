@@ -1,3 +1,4 @@
+
 import java.text.CharacterIterator;
 
 public class Comentario extends AFD {

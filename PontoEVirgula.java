@@ -1,3 +1,4 @@
+
 import java.text.CharacterIterator;
 
 public class PontoEVirgula extends AFD{

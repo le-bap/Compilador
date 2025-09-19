@@ -1,3 +1,4 @@
+
 import java.text.CharacterIterator;
 
 public abstract class AFD{
@@ -10,8 +11,7 @@ public abstract class AFD{
 
         if (current == ' ' || current == '+' || current == '-' || current == '*' ||
         current == '/' || current == '(' || current == ')' || current == '@' ||
-        current == '\n' || current == '\r' || current == '\"' || current == ';'|| 
-        current == CharacterIterator.DONE){
+        current == '\n' || current == '\r' || current == '\"' || current == ';'|| current == CharacterIterator.DONE){
             return true;
         }
 

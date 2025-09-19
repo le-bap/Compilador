@@ -1,3 +1,16 @@
-receita ingrediente 10 tempero _var  testeVar23;
-5.7
+receita
+tempero 
+ingrediente
+receitinha
+prove
+sirva
+deguste
+tempere
+cozinhe_enquanto
+bata
+ferva ;
+10  ()
+9.8 {}
+"texto"
+@comentario@
 pratopronto
