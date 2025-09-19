@@ -1,3 +1,4 @@
+package analisadorLexico;
 public class Token{
 	
 	String tipo;

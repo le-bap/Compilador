@@ -1,3 +1,4 @@
+package analisadorLexico;
 
 import java.text.CharacterIterator;
 import java.util.Arrays;

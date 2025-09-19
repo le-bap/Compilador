@@ -1,5 +1,10 @@
 
+
 import java.util.List;
+
+import analisadorLexico.Lexer;
+import analisadorLexico.Token;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.IOException;

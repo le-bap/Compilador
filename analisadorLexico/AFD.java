@@ -1,4 +1,4 @@
-
+package analisadorLexico;
 import java.text.CharacterIterator;
 
 public abstract class AFD{
@@ -24,7 +24,7 @@ public abstract class AFD{
     //     return next;
     // }
 
-     public static boolean verificarPalavra(CharacterIterator code, String word) {
+    public static boolean verificarPalavra(CharacterIterator code, String word) {
         int pos = code.getIndex(); // salva posição inicial
         for (int i = 0; i < word.length(); i++) {
             if (code.current() != word.charAt(i)) {
