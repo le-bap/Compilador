@@ -12,6 +12,10 @@ public class Caracteres extends AFD {
             code.next();
             return new Token("PONTO_VIRGULA", ";");
         }
+        else if (lexema == '='){
+            code.next();
+            return new Token("ATRIBUICAO", "=");
+        }
         else if (lexema == ','){
             code.next();
             return new Token("VIRGULA", ",");

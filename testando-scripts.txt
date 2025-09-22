@@ -1,4 +1,4 @@
-receita
+receita = teste
 tempero 
 ingrediente
 receitinha
