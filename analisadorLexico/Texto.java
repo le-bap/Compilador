@@ -9,17 +9,25 @@ public class Texto extends AFD {
         
          if (code.current() == '\"') {
             code.next(); 
-            StringBuilder comentario = new StringBuilder();
-            comentario.append('\"');
+            StringBuilder valor = new StringBuilder();
+            valor.append('\"');
             while (code.current() != CharacterIterator.DONE && code.current() != '\"') {
-                comentario.append(code.current());
+                valor.append(code.current());
                 code.next();
             }
 
             if (code.current() == '\"') {
                 code.next(); 
-                comentario.append('\"');
-                return new Token("TEXT", comentario.toString());
+                valor.append('\"');
+                String lexema = valor.toString();
+
+                // confere se eh do tipo prove
+                if (lexema.equals("\"%i\"") || lexema.equals("\"%t\"") || lexema.equals("\"%r\"")) {
+                    return new Token("TIPO_PROVE", lexema); 
+                }
+
+                // se nao for eh text normal
+                return new Token("TEXT", lexema);
             }
 
         }

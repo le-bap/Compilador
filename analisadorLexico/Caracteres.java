@@ -36,6 +36,10 @@ public class Caracteres extends AFD {
             code.next();
             return new Token("FECHA_PARENTESES", ")");
         }
+        else if (lexema == '%'){
+            code.next();
+            return new Token("PORCENTAGEM", "%");
+        }
 
         return null;
     }

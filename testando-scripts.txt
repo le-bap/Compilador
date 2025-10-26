@@ -1,16 +1,5 @@
-receita = teste
-tempero 
-ingrediente
-receitinha
-prove
-sirva
-deguste
-tempere
-cozinhe_enquanto
-bata
-ferva ;
-10  ()
-9.8 {}
-"texto"
-@comentario@
+receita
+
+@comentario tentando comentar@
+prove("%i" x)
 pratopronto
