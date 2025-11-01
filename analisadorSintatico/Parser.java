@@ -29,7 +29,7 @@ public class Parser {
 
     private void erro(String regra) {
         System.out.println("-------------- Regra: " + regra);
-        System.out.println("token inválido: " + token);
+        System.out.println("token invalido: " + token);
         System.out.println("------------------------------\n");
     }
 
@@ -41,36 +41,26 @@ public class Parser {
         erro("receita");
         return false;
     }
-
+    
     private boolean codigo() {
-        if ((sentenca() && codigo()) || epslon()) {
-            return true;
-        }
+        if (token.lexema.equals("}") || token.lexema.equals("pratopronto")) return true;
+
+        if (sentenca())
+            return codigo();
+
         erro("codigo");
         return false;
     }
 
     // SENTENÇAS
     private boolean sentenca() {
-        if (declarar_int() || declarar_float() || declarar_string() ||atribuir() ||
-        sirva() || prove() || ifelse() || cozinhe_enquanto() || bata() || ferva_bata()) return true;
+
+        if (sirva()) return true;
+        if (ifelse()) return true;
+        if (prove()) return true;
+        if (bata()) return true;
+
         return false;
-    }
-
-    private boolean declarar_int() {
-        return matchL("ingrediente") && id() && matchL("=") && matchT("ingrediente") && matchL(";");
-    }
-
-    private boolean declarar_float() {
-        return matchL("tempero") && id() && matchL("=") && matchT("tempero") && matchL(";");
-    }
-
-    private boolean declarar_string() {
-        return matchL("receitinha") && id() && matchL("=") && string() && matchL(";");
-    }
-
-    private boolean atribuir() {
-        return id() && matchL("=") && exp() && matchL(";");
     }
 
     private boolean sirva() {
@@ -85,25 +75,65 @@ public class Parser {
                 }
             }
         }
+        erro("prove");
         return false;
     }
 
     private boolean ifelse() {
-        if ((matchL("deguste") && condicao() && matchL("{") && codigo() && matchL("}")) ||
-            (matchL("deguste") && condicao() && matchL("{") && codigo() && matchL("}") &&
-             matchL("tempere") && matchL("{") && codigo() && matchL("}"))) {
-            return true;
+
+        if (matchL("deguste"))
+        {
+            if (condicao() && matchL("{") && codigo() && matchL("}"))
+            {
+                if (matchL("tempere"))
+                {
+                    if (!(matchL("{") && codigo() && matchL("}"))){
+                        erro("if else");
+                        return false;
+                    }
+                    return true;
+                }
+                return true;
+            }
+            erro("ifelse");
+            return false;
         }
         return false;
-    }
-
-    private boolean cozinhe_enquanto() {
-        return matchL("cozinhe_enquanto") && condicao() && matchL("{") && codigo() && matchL("}");
     }
 
     private boolean bata() {
         return matchL("bata") && condicao() && matchL("{") && codigo() && matchL("}");
     }
+
+    private boolean ehTipoAtual() {
+        return token.lexema.equals("ingrediente") ||
+            token.lexema.equals("tempero") ||
+            token.lexema.equals("receitinha");
+    }
+
+
+    private boolean atribuir() {
+        if (id() && matchL("=") && exp() && matchL(";")) return true;
+        else if (matchL("ingrediente") && id() && matchL("=") && exp() && matchL(";")) return true; 
+        else if (matchL("tempero") && id() && matchL("=") && exp() && matchL(";")) return true;
+        else if (matchL("receitinha") && id() && matchL("=") && exp() && matchL(";")) return true;
+        return false;
+    }
+
+    private boolean declarar() {
+        if (tipos()){
+            if (id() && matchL(";")) return true;
+        }
+        return false; 
+    }
+
+    
+
+    private boolean cozinhe_enquanto() {
+        return matchL("cozinhe_enquanto") && condicao() && matchL("{") && codigo() && matchL("}");
+    }
+
+    
 
     private boolean ferva_bata() {
         return matchL("ferva") && condicao() && matchL("{") && codigo() && matchL("}") &&
@@ -111,34 +141,58 @@ public class Parser {
     }
 
     // FUNÇÕES AUXILIARES
-    private boolean epslon() {
+    private boolean epslon(){
         return true;
     }
 
     private boolean exp() {
-        if (num() || id() || string() || (matchL("(") && exp() && matchL(")"))) {
-            while (operadorArit() && (num() || id() || string() || (matchL("(") && exp() && matchL(")")))) {
-                // repete operadores aritméticos
-            }
+        if (!termo()) return false;
+
+        while (operadorArit()) {
+            if (!termo()) return false;
+        }
+
+        return true;
+    }
+
+    private boolean termo() {
+        if (num() || id() || string()) {
             return true;
+        }
+        if (matchL("(")) {
+            if (exp() && matchL(")")) return true;
+            return false; 
         }
         return false;
     }
 
+
     private boolean condicao() {
-        return matchL("(") && id() && operador() && num() && matchL(")");
+        if (matchL("(") && id() && operador() && num() && matchL(")")) return true;
+        erro("condicao");
+        return false;
     }
 
     private boolean operador() {
-        return matchL(">") || matchL("<") || matchL("==") || matchL(">=") || matchL("<=");
+        if (matchL(">") || matchL("<") || matchL("==") || 
+        matchL(">=") || matchL("<=")) return true;
+        
+        erro("operador comparativo");
+        return false;
     }
 
     private boolean operadorArit() {
         return matchL("+") || matchL("-") || matchL("*") || matchL("/");
     }
 
+    private boolean tipos(){
+        return matchL("ingrediente") || matchL("tempero") || matchL("receitinha");
+    }
+
     private boolean id() {
-        return matchT("id");
+        if (matchT("id")) return true;
+
+        return false;
     }
 
     private boolean string() {
@@ -146,7 +200,11 @@ public class Parser {
     }
 
     private boolean num() {
-        return matchT("tempero") || matchT("ingrediente");
+        if (matchT("num"))
+        return true;
+
+        erro("num");
+        return false;
     }
 
     // confere o tipo
