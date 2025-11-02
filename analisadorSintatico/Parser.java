@@ -54,33 +54,48 @@ public class Parser {
 
     // SENTENÇAS
     private boolean sentenca() {
-
         if (sirva()) return true;
         if (ifelse()) return true;
         if (prove()) return true;
         if (bata()) return true;
+        if (ferva_bata()) return true;
+        if (cozinhe_enquanto()) return true;
 
         return false;
     }
 
     private boolean sirva() {
-        return matchL("sirva") && matchL("(") && string() && matchL(")") && matchL(";");
+        if (matchL("sirva"))
+        {
+            if (matchL("(") && string() && matchL(")") && matchL(";")) return true;
+            erro("sirva");
+            return false;
+        }
+        return false;
     }
 
     private boolean prove() {
-        if (matchL("prove") && matchL("(")) {
-            if (matchL("\"%i\"") || matchL("\"%t\"") || matchL("\"%r\"")) {
-                if (id() && matchL(")") && matchL(";")) {
-                    return true;
+        if (matchL("prove"))
+        {
+            if (matchL("("))
+            {
+                if (matchL("\"%i\"") || matchL("\"%t\"") || matchL("\"%r\"")) {
+                    if (id() && matchL(")") && matchL(";")) {
+                        return true;
+                    }
+                    erro("prove");
+                    return false;
                 }
+                erro("prove");
+                return false; 
             }
+            erro("prove");
+            return false;
         }
-        erro("prove");
         return false;
     }
 
     private boolean ifelse() {
-
         if (matchL("deguste"))
         {
             if (condicao() && matchL("{") && codigo() && matchL("}"))
@@ -102,7 +117,34 @@ public class Parser {
     }
 
     private boolean bata() {
-        return matchL("bata") && condicao() && matchL("{") && codigo() && matchL("}");
+        if (matchL("bata"))
+        {
+            if (condicao() && matchL("{") && codigo() && matchL("}")) return true;
+            erro("bata");
+            return false;
+        }
+        return false;
+    }
+
+    private boolean cozinhe_enquanto() {
+        if (matchL("cozinhe_enquanto"))
+        {
+            if (condicao() && matchL("{") && codigo() && matchL("}")) return true;
+            erro("cozinhe_enquanto");
+            return false;
+        }
+        return false;    
+    }
+
+    private boolean ferva_bata() {
+        if (matchL("ferva"))
+        {
+            if (matchL("{") && codigo() && matchL("}") &&
+               matchL("bata") && condicao()) return true;
+            erro("ferva bata");
+            return false;
+        }
+        return false;
     }
 
     private boolean ehTipoAtual() {
@@ -127,18 +169,6 @@ public class Parser {
         return false; 
     }
 
-    
-
-    private boolean cozinhe_enquanto() {
-        return matchL("cozinhe_enquanto") && condicao() && matchL("{") && codigo() && matchL("}");
-    }
-
-    
-
-    private boolean ferva_bata() {
-        return matchL("ferva") && condicao() && matchL("{") && codigo() && matchL("}") &&
-               matchL("bata") && condicao();
-    }
 
     // FUNÇÕES AUXILIARES
     private boolean epslon(){

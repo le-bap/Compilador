@@ -32,38 +32,58 @@ public class Main {
       tokens.add(new Token(")", ")"));
       tokens.add(new Token(";", ";"));
     tokens.add(new Token("}", "}"));
-
     // tempere 
     tokens.add(new Token("tempere", "tempere"));
     tokens.add(new Token("{", "{"));
     tokens.add(new Token("}", "}"));
-
-
-    tokens.add(new Token("prove", "prove"));
+    
+    // bata
+    tokens.add(new Token("bata", "bata"));
     tokens.add(new Token("(", "("));
-    tokens.add(new Token("tipo_prove", "\"%i\"")); 
-    tokens.add(new Token("id", "num_maior"));
+    tokens.add(new Token("id", "l"));
+    tokens.add(new Token("==", "=="));
+    tokens.add(new Token("num", "3"));
     tokens.add(new Token(")", ")"));
-    tokens.add(new Token(";", ";"));
+    tokens.add(new Token("{", "{"));
+    tokens.add(new Token("}", "}"));
 
+     // cozinhe enquanto
+    tokens.add(new Token("cozinhe_enquanto", "cozinhe_enquanto"));
+    tokens.add(new Token("(", "("));
+    tokens.add(new Token("id", "lis"));
+    tokens.add(new Token("==", "=="));
+    tokens.add(new Token("num", "6"));
+    tokens.add(new Token(")", ")"));
+    tokens.add(new Token("{", "{"));
+      tokens.add(new Token("sirva", "sirva"));
+      tokens.add(new Token("(", "("));
+      tokens.add(new Token("receitinha", "eh q eu nao to falando tudo"));
+      tokens.add(new Token(")", ")"));
+      tokens.add(new Token(";", ";"));
+    tokens.add(new Token("}", "}"));
+
+    // ferva bata
+    tokens.add(new Token("ferva", "ferva"));
+    tokens.add(new Token("{", "{"));
+      // prove
+      tokens.add(new Token("prove", "prove"));
+      tokens.add(new Token("(", "("));
+      tokens.add(new Token("tipo_prove", "\"%i\"")); 
+      tokens.add(new Token("id", "num_maior"));
+      tokens.add(new Token(")", ")"));
+      tokens.add(new Token(";", ";"));
+    tokens.add(new Token("}", "}"));
+    tokens.add(new Token("bata", "bata"));
+    tokens.add(new Token("(", "("));
+    tokens.add(new Token("id", "qtd"));
+    tokens.add(new Token("<=", "<="));
+    tokens.add(new Token("num", "8.9"));
+    tokens.add(new Token(")", ")"));
+    
 
     // fim da receita
     tokens.add(new Token("pratopronto", "pratopronto"));
     tokens.add(new Token("EOF", "$"));
-
-    // tokens.add(new Token("ingrediente", "ingrediente"));
-    // tokens.add(new Token("id", "num_maior"));
-    // tokens.add(new Token(";", ";"));
-
-    // tokens.add(new Token("sirva", "sirva"));
-    // tokens.add(new Token("(", "("));
-    // tokens.add(new Token("receitinha", "digite um numero maior que 5"));
-    // tokens.add(new Token(")", ")"));
-    // tokens.add(new Token(";", ";"));
-
-     // fim do tempere
-
-    
     
     Parser parser = new Parser(tokens);
     parser.main();
