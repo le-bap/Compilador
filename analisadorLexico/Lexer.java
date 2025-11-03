@@ -22,10 +22,11 @@ public class Lexer{
         afds.add(new Texto());
         afds.add(new Palavras());
         afds.add(new Caracteres());
+        afds.add(new OpComparacao());
     }
 
     public void skipWhiteSpace(){
-        while(code.current() == ' ' || code.current() == '\n' || code.current() == '\r'){
+        while(code.current() == ' ' || code.current() == '\n' || code.current() == '\r' || code.current() == '\t'){
             if (code.current() == '\n') {
                 linha++; 
             }

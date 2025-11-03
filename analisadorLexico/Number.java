@@ -16,11 +16,11 @@ public class Number extends AFD{
                 number+=readNumber(code);
 
                 if (isTokenSeparator(code)){
-                    return new Token("DECIMAL", number); 
+                    return new Token("TEMPERO", number); 
                 }
             }
               if (isTokenSeparator(code)) {
-                return new Token("INTEIRO", number); 
+                return new Token("INGREDIENTE", number); 
             }
         }
 

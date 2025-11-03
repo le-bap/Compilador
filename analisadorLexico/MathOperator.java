@@ -9,17 +9,17 @@ public class MathOperator extends AFD{
         switch(code.current()){
             case '+':
                 code.next();
-                return new Token("PLUS", "+");
+                return new Token("OP_ARITMETICO", "+");
             case '-':
                 code.next();
-                return new Token("MINUS", "-");
+                return new Token("OP_ARITMETICO", "-");
             case '*':
                 code.next();
-                return new Token("MULT", "*");
+                return new Token("OP_ARITMETICO", "*");
             case '/':
                 code.next();
-                return new Token("DIV", "/");
-
+                return new Token("OP_ARITMETICO", "/");
+            
             case CharacterIterator.DONE: // fim do arquivo
                 return new Token("EOF", "$");
             

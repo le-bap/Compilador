@@ -1,5 +1,17 @@
 receita
-
-@comentario tentando comentar@
-prove("%i" x)
+ingrediente max = 10 + 2;
+sirva("digite um numero");
+ingrediente x;
+prove("%i" x);
+deguste (x <= max) {
+	sirva ("max eh menor ou igual a 5");
+}
+tempere {
+	ingrediente num_maior;
+	sirva("digite um numero maior que 5");
+	prove("%i" num_maior);
+}
+bata
+cozinhe_enquanto
+ferva
 pratopronto

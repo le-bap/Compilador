@@ -56,13 +56,10 @@ public class Palavras extends AFD {
                 else if (lexema.equals("bata")){
                     return new Token("FOR", lexema);
                 }
-                else if (lexema.equals("bata")){
-                    return new Token("FOR", lexema);
-                }
                 else if (lexema.equals("ferva")){
                     return new Token("DO_WHILE", lexema);
                 }
-
+               
             } else {
                 // se nao for reservada, eh um identificador
                 return new Token("IDENTIFICADOR", lexema);

@@ -7,7 +7,7 @@ public class Texto extends AFD {
     @Override
     public Token evaluate(CharacterIterator code) {
         
-         if (code.current() == '\"') {
+         if (code.current() == '"') {
             code.next(); 
             StringBuilder valor = new StringBuilder();
             valor.append('\"');
@@ -27,7 +27,7 @@ public class Texto extends AFD {
                 }
 
                 // se nao for eh text normal
-                return new Token("TEXT", lexema);
+                return new Token("RECEITINHA", lexema);
             }
 
         }

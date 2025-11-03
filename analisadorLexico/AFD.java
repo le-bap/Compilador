@@ -10,7 +10,7 @@ public abstract class AFD{
         char current = code.current();
 
         if (current == ' ' || current == '+' || current == '-' || current == '*' ||
-        current == '/' || current == '(' || current == ')' || current == '@' ||
+        current == '/' || current == '(' || current == ')' || current == '@' || current == '\t' ||
         current == '\n' || current == '\r' || current == '\"' || current == ';'|| current == CharacterIterator.DONE){
             return true;
         }
@@ -39,7 +39,7 @@ public abstract class AFD{
         if (next == CharacterIterator.DONE || 
             next == ' ' || next == '\n' || next == ';' ||next == '+' || next == '-' ||
             next == '*' || next == '/' || next == '(' || next == ')' || next == '@' ||
-            next == '\"') {
+            next == '\"'|| next == '\t') {
             return true;
         }
 

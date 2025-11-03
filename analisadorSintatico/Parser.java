@@ -58,10 +58,11 @@ public class Parser {
         if (ifelse()) return true;
         if (prove()) return true;
         if (bata()) return true;
-        if (ferva_bata()) return true;
+        if (ferva_cozinhe_enquanto()) return true;
         if (cozinhe_enquanto()) return true;
         if (declarar()) return true;
         if (atribuir()) return true;
+        if (comentario()) return true;
         return false;
     }
 
@@ -82,7 +83,7 @@ public class Parser {
         {
             if (matchL("("))
             {
-                if (matchL("\"%i\"") || matchL("\"%t\"") || matchL("\"%r\"")) {
+                if (matchT("TIPO_PROVE")) {
                     if (id() && matchL(")") && matchL(";")) {
                         return true;
                     }
@@ -96,6 +97,10 @@ public class Parser {
             return false;
         }
         return false;
+    }
+
+    private boolean comentario(){
+        return (matchT("COMMENT"));
     }
 
     private boolean ifelse() {
@@ -142,12 +147,12 @@ public class Parser {
     }
 
     // do while
-    private boolean ferva_bata() {
+    private boolean ferva_cozinhe_enquanto() {
         if (matchL("ferva"))
         {
             if (matchL("{") && codigo() && matchL("}") &&
-               matchL("bata") && condicao()) return true;
-            erro("ferva bata");
+               matchL("cozinhe_enquanto") && condicao()) return true;
+            erro("ferva cozinhe_enquanto");
             return false;
         }
         return false;
@@ -210,33 +215,29 @@ public class Parser {
     }
 
     private boolean operador() {
-        if (matchL(">") || matchL("<") || matchL("==") || 
-        matchL(">=") || matchL("<=")) return true;
-        
-        erro("operador comparativo");
-        return false;
+        return matchT("OP_COMPARACAO");
     }
 
     private boolean operadorArit() {
-        return matchT("op_aritmetico");
+        return matchT("OP_ARITMETICO");
     }
 
     private boolean tipos(){
-        return matchL("ingrediente") || matchL("tempero") || matchL("receitinha");
+        return matchT("RESERVADA_INGREDIENTE") || matchT("RESERVADA_TEMPERO") || matchT("RESERVADA_RECEITINHA");
     }
 
     private boolean id() {
-        if (matchT("id")) return true;
+        if (matchT("IDENTIFICADOR")) return true;
 
         return false;
     }
 
     private boolean string() {
-        return matchT("receitinha");
+        return matchT("RECEITINHA");
     }
 
     private boolean num() {
-        return (matchT("tempero") || matchT("ingrediente"));
+        return (matchT("TEMPERO") || matchT("INGREDIENTE"));
     }
 
     // confere o tipo
