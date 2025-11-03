@@ -23,7 +23,7 @@ public class Main {
     tokens.add(new Token("(", "("));
     tokens.add(new Token("id", "x"));
     tokens.add(new Token("<=", "<="));
-    tokens.add(new Token("num", "10"));
+    tokens.add(new Token("ingrediente", "10"));
     tokens.add(new Token(")", ")"));
     tokens.add(new Token("{", "{"));
       tokens.add(new Token("sirva", "sirva"));
@@ -42,7 +42,7 @@ public class Main {
     tokens.add(new Token("(", "("));
     tokens.add(new Token("id", "l"));
     tokens.add(new Token("==", "=="));
-    tokens.add(new Token("num", "3"));
+    tokens.add(new Token("ingrediente", "3"));
     tokens.add(new Token(")", ")"));
     tokens.add(new Token("{", "{"));
     tokens.add(new Token("}", "}"));
@@ -52,7 +52,7 @@ public class Main {
     tokens.add(new Token("(", "("));
     tokens.add(new Token("id", "lis"));
     tokens.add(new Token("==", "=="));
-    tokens.add(new Token("num", "6"));
+    tokens.add(new Token("ingrediente", "6"));
     tokens.add(new Token(")", ")"));
     tokens.add(new Token("{", "{"));
       tokens.add(new Token("sirva", "sirva"));
@@ -77,9 +77,38 @@ public class Main {
     tokens.add(new Token("(", "("));
     tokens.add(new Token("id", "qtd"));
     tokens.add(new Token("<=", "<="));
-    tokens.add(new Token("num", "8.9"));
+    tokens.add(new Token("tempero", "8.9"));
     tokens.add(new Token(")", ")"));
     
+    // declaracao
+    tokens.add(new Token("ingrediente", "ingrediente"));
+    tokens.add(new Token("id", "tomate"));
+    tokens.add(new Token(";", ";"));
+
+    tokens.add(new Token("tempero", "tempero"));
+    tokens.add(new Token("id", "oregano"));
+    tokens.add(new Token(";", ";"));
+
+    tokens.add(new Token("receitinha", "receitinha"));
+    tokens.add(new Token("id", "bolo"));
+    tokens.add(new Token(";", ";"));
+
+    // declaracao com atribuicao
+    tokens.add(new Token("tempero", "tempero"));
+    tokens.add(new Token("id", "vambora"));
+    tokens.add(new Token("=", "="));
+    tokens.add(new Token("tempero", "10.3"));
+    tokens.add(new Token(";", ";"));
+
+    // atribuicao direta 
+    tokens.add(new Token("id", "teste"));
+    tokens.add(new Token("=", "="));
+    tokens.add(new Token("ingrediente", "3"));
+    tokens.add(new Token("op_aritmetico", "+"));
+    tokens.add(new Token("tempero", "10.3"));
+    tokens.add(new Token("op_aritmetico", "*"));
+    tokens.add(new Token("tempero", "10.3"));
+    tokens.add(new Token(";", ";"));
 
     // fim da receita
     tokens.add(new Token("pratopronto", "pratopronto"));

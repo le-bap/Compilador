@@ -60,10 +60,12 @@ public class Parser {
         if (bata()) return true;
         if (ferva_bata()) return true;
         if (cozinhe_enquanto()) return true;
-
+        if (declarar()) return true;
+        if (atribuir()) return true;
         return false;
     }
 
+    // print
     private boolean sirva() {
         if (matchL("sirva"))
         {
@@ -74,6 +76,7 @@ public class Parser {
         return false;
     }
 
+    // input
     private boolean prove() {
         if (matchL("prove"))
         {
@@ -116,6 +119,7 @@ public class Parser {
         return false;
     }
 
+    // for
     private boolean bata() {
         if (matchL("bata"))
         {
@@ -126,6 +130,7 @@ public class Parser {
         return false;
     }
 
+    // while
     private boolean cozinhe_enquanto() {
         if (matchL("cozinhe_enquanto"))
         {
@@ -136,6 +141,7 @@ public class Parser {
         return false;    
     }
 
+    // do while
     private boolean ferva_bata() {
         if (matchL("ferva"))
         {
@@ -147,46 +153,46 @@ public class Parser {
         return false;
     }
 
-    private boolean ehTipoAtual() {
-        return token.lexema.equals("ingrediente") ||
-            token.lexema.equals("tempero") ||
-            token.lexema.equals("receitinha");
-    }
-
-
-    private boolean atribuir() {
-        if (id() && matchL("=") && exp() && matchL(";")) return true;
-        else if (matchL("ingrediente") && id() && matchL("=") && exp() && matchL(";")) return true; 
-        else if (matchL("tempero") && id() && matchL("=") && exp() && matchL(";")) return true;
-        else if (matchL("receitinha") && id() && matchL("=") && exp() && matchL(";")) return true;
-        return false;
-    }
-
+    // tipo id; ou tipo id = exp ;
     private boolean declarar() {
-        if (tipos()){
-            if (id() && matchL(";")) return true;
+        if (tipos() && id()){
+            if (matchL(";")) return true;
+            
+            if (matchL("="))
+            {
+                if (exp() && matchL(";")) return true;
+                erro("declarar");
+                return false;
+            }
+            erro("declarar");
+            return false;
         }
         return false; 
     }
 
-
-    // FUNÇÕES AUXILIARES
-    private boolean epslon(){
-        return true;
+    // tipo id = exp;
+    private boolean atribuir() {
+        if (id()) 
+        {
+            if (matchL("=") && exp() && matchL(";")) return true;
+            erro("atribuir");
+            return false;
+        }
+        return false;
     }
 
+    // FUNÇÕES AUXILIARES
     private boolean exp() {
         if (!termo()) return false;
 
         while (operadorArit()) {
             if (!termo()) return false;
         }
-
         return true;
     }
 
     private boolean termo() {
-        if (num() || id() || string()) {
+        if (num() || id()) {
             return true;
         }
         if (matchL("(")) {
@@ -212,7 +218,7 @@ public class Parser {
     }
 
     private boolean operadorArit() {
-        return matchL("+") || matchL("-") || matchL("*") || matchL("/");
+        return matchT("op_aritmetico");
     }
 
     private boolean tipos(){
@@ -230,11 +236,7 @@ public class Parser {
     }
 
     private boolean num() {
-        if (matchT("num"))
-        return true;
-
-        erro("num");
-        return false;
+        return (matchT("tempero") || matchT("ingrediente"));
     }
 
     // confere o tipo
