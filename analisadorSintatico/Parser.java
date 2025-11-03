@@ -209,9 +209,10 @@ public class Parser {
 
 
     private boolean condicao() {
-        if (matchL("(") && id() && operador())
+        if (matchL("("))
         {
-            if (num() && matchL(")")) return true;
+            if (id() && operador() && num() && matchL(")")) return true;
+            if (num() && operador() && id() && matchL(")")) return true;
             if (id() && matchL(")")) return true;
             erro("condicao");
             return false;
