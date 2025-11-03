@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 
-public class Teste {
+public class TesteLexico {
 
     public static void main(String[] args) {
         try {

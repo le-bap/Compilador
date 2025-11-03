@@ -11,7 +11,4 @@ tempere {
 	sirva("digite um numero maior que 5");
 	prove("%i" num_maior);
 }
-bata
-cozinhe_enquanto
-ferva
 pratopronto
