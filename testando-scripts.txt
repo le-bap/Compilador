@@ -1,14 +1,10 @@
 receita
-ingrediente max = 10 + 2;
-sirva("digite um numero");
-ingrediente x;
-prove("%i" x);
-deguste (x <= max) {
-	sirva ("max eh menor ou igual a 5");
+
+bata (x = 0; x <= 10){
+    sirva("escreva o numero");
+    prove("%i" num);
+    sirva("seu numero eh ");
+    sirva({num});
 }
-tempere {
-	ingrediente num_maior;
-	sirva("digite um numero maior que 5");
-	prove("%i" num_maior);
-}
+
 pratopronto

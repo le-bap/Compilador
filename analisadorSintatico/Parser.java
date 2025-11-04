@@ -12,12 +12,15 @@ public class Parser {
         this.tokens = tokens;
     }
 
-    public void main() {
+    public boolean main() {
         token = getNextToken();
+        header();
         if (receita() && matchT("EOF")) {
-            System.out.println("Sintaticamente correto");
+            footer();
+            return true;
         } else {
             erro("main");
+            return false;
         }
     }
 
@@ -68,9 +71,16 @@ public class Parser {
 
     // print
     private boolean sirva() {
-        if (matchL("sirva"))
+        if (matchL("sirva", "println!"))
         {
-            if (matchL("(") && string() && matchL(")") && matchL(";")) return true;
+            if (matchL("(", "(\"{}\",")) 
+            {
+                if ( string() && matchL(")", ")") && matchL(";", ";\n")) return true;
+                if ( matchL("{") && id() && matchL("}") && 
+                matchL(")", ")") && matchL(";", ";\n")) return true;
+                erro("sirva");
+                return false;
+            }
             erro("sirva");
             return false;
         }
@@ -83,34 +93,46 @@ public class Parser {
         {
             if (matchL("("))
             {
-                if (matchT("TIPO_PROVE")) {
-                    if (id() && matchL(")") && matchL(";")) {
-                        return true;
+                if (matchT("TIPO_PROVE")) 
+                {
+                    traduz("let mut ");
+                    String id = token.lexema;
+                    if (id())
+                    {
+                        traduz(" = String::new();\n");
+                        traduz("io::stdin().read_line(&mut " + id + ").expect(\"Falha ao ler a entrada\");\n");
+                        if (matchL(")") && matchL(";")) return true;
                     }
                     erro("prove");
-                    return false;
+                    return false;    
                 }
                 erro("prove");
-                return false; 
+                return false;
             }
             erro("prove");
-            return false;
+            return false; 
         }
+
         return false;
     }
 
     private boolean comentario(){
-        return (matchT("COMMENT"));
+        traduz("// ");
+        if (matchT("COMMENT", token.lexema)){
+            traduz("\n");
+            return true;
+        } 
+        return false;
     }
 
     private boolean ifelse() {
-        if (matchL("deguste"))
+        if (matchL("deguste", "if "))
         {
-            if (condicao() && matchL("{") && codigo() && matchL("}"))
+            if (condicao() && matchL("{", " {\n") && codigo() && matchL("}", "}"))
             {
-                if (matchL("tempere"))
+                if (matchL("tempere", "else"))
                 {
-                    if (!(matchL("{") && codigo() && matchL("}"))){
+                    if (!(matchL("{", " {") && codigo() && matchL("}", "}"))){
                         erro("if else");
                         return false;
                     }
@@ -126,9 +148,9 @@ public class Parser {
 
     // for
     private boolean bata() {
-        if (matchL("bata"))
+        if (matchL("bata", "for "))
         {
-            if (condicao() && matchL("{") && codigo() && matchL("}")) return true;
+            if (condicaoBata() && matchL("{", " {\n") && codigo() && matchL("}", "}\n")) return true;
             erro("bata");
             return false;
         }
@@ -161,11 +183,11 @@ public class Parser {
     // tipo id; ou tipo id = exp ;
     private boolean declarar() {
         if (tipos() && id()){
-            if (matchL(";")) return true;
+            if (matchL(";", ";\n")) return true;
             
-            if (matchL("="))
+            if (matchL("=", "="))
             {
-                if (exp() && matchL(";")) return true;
+                if (exp() && matchL(";", ";\n")) return true;
                 erro("declarar");
                 return false;
             }
@@ -179,7 +201,7 @@ public class Parser {
     private boolean atribuir() {
         if (id()) 
         {
-            if (matchL("=") && exp() && matchL(";")) return true;
+            if (matchL("=", "=") && exp() && matchL(";", ";\n")) return true;
             erro("atribuir");
             return false;
         }
@@ -197,7 +219,7 @@ public class Parser {
     }
 
     private boolean termo() {
-        if (num() || id()) {
+        if (num() || id() || string()) {
             return true;
         }
         if (matchL("(")) {
@@ -206,7 +228,6 @@ public class Parser {
         }
         return false;
     }
-
 
     private boolean condicao() {
         if (matchL("("))
@@ -220,30 +241,71 @@ public class Parser {
         return false;
     }
 
+    private boolean condicaoBata() {
+        if (matchL("("))
+        {
+            if (id() && matchL("=", " in ")){
+                if (num() && matchL(";"))
+                {
+                    if (idBata() && operadorBata() && num() && matchL(")")) return true;
+                    if (num() && operadorBata() && idBata() && matchL(")")) return true;
+                    erro("condicao");
+                    return false; 
+                }
+                  
+                  
+            }   
+            erro("condicao");
+            return false;
+        }
+        return false;
+    }
+
     private boolean operador() {
-        return matchT("OP_COMPARACAO");
+        return matchT("OP_COMPARACAO", token.lexema);
+    }
+
+    private boolean operadorBata() {
+        String op = token.lexema; 
+        if (matchT("OP_COMPARACAO")){
+            if (op == "<" || op == ">"){
+                traduz("..");
+            }
+            else {
+                traduz("..=");
+            }
+            return true;
+        }
+        return false;
     }
 
     private boolean operadorArit() {
-        return matchT("OP_ARITMETICO");
+        return matchT("OP_ARITMETICO", token.lexema);
     }
 
     private boolean tipos(){
-        return matchT("RESERVADA_INGREDIENTE") || matchT("RESERVADA_TEMPERO") || matchT("RESERVADA_RECEITINHA");
+        return matchT("RESERVADA_INGREDIENTE", "let ") || matchT("RESERVADA_TEMPERO", "let ") ||
+         matchT("RESERVADA_RECEITINHA", "let ");
     }
 
     private boolean id() {
+        if (matchT("IDENTIFICADOR", token.lexema)) return true;
+
+        return false;
+    }
+
+    private boolean idBata() {
         if (matchT("IDENTIFICADOR")) return true;
 
         return false;
     }
 
     private boolean string() {
-        return matchT("RECEITINHA");
+        return matchT("RECEITINHA", token.lexema);
     }
 
     private boolean num() {
-        return (matchT("TEMPERO") || matchT("INGREDIENTE"));
+        return (matchT("TEMPERO", token.lexema) || matchT("INGREDIENTE", token.lexema));
     }
 
     // confere o tipo
@@ -255,6 +317,15 @@ public class Parser {
         return false;
     }
 
+    private boolean matchT(String palavra, String newcode){
+        if (token.tipo.equals(palavra)){
+        traduz(newcode);
+        token = getNextToken();
+        return true;
+        }
+        return false;
+    }
+
     // confere o lexema
     private boolean matchL(String lexema) {
         if (token.lexema.equals(lexema)) {
@@ -262,5 +333,27 @@ public class Parser {
             return true;
         }
         return false;
+    }
+
+    private boolean matchL(String palavra, String newcode){
+        if (token.lexema.equals(palavra)){
+        traduz(newcode);
+        token = getNextToken();
+        return true;
+        }
+        return false;
+    }
+
+    public void traduz(String code){
+        System.out.print(code);
+    }
+
+    public void header(){
+    System.out.println("use std::io;");
+    System.out.println("fn main() {");
+    }
+  
+    public void footer(){
+        System.out.println("}");
     }
 }
