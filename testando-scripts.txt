@@ -9,6 +9,7 @@ cozinhe_enquanto (x < 9) {
         parar;
     }
 }
+
 sirva("aqui vem o for");
 bata (y = 2; y <= 5){
     deguste (y == 4){
@@ -16,5 +17,12 @@ bata (y = 2; y <= 5){
         parar;
     }
 }
+
+sirva("aqui vem o do while");
+ingrediente z = 0;
+ferva {
+sirva("teste");
+z = z + 1;
+} cozinhe_enquanto (z > 5)
 
 pratopronto

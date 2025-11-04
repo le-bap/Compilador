@@ -180,10 +180,14 @@ public class Parser {
 
     // do while
     private boolean ferva_cozinhe_enquanto() {
-        if (matchL("ferva"))
+        if (matchL("ferva", "loop"))
         {
-            if (matchL("{") && codigo() && matchL("}") &&
-               matchL("cozinhe_enquanto") && condicao()) return true;
+            if (matchL("{", "{") && codigo() && matchL("}")) {
+                if (matchL("cozinhe_enquanto", "if ") && condicao()){
+                    traduz("{\nbreak\n}\n}");
+                    return true;
+                }
+            }
             erro("ferva cozinhe_enquanto");
             return false;
         }
