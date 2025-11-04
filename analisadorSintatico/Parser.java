@@ -1,15 +1,24 @@
 package analisadorSintatico;
 
 import analisadorLexico.Token;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class Parser {
 
     List<Token> tokens;
     Token token;
+    private BufferedWriter writer;
 
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
+    }
+
+    public Parser(List<Token> tokens, BufferedWriter writer) {
+        this.tokens = tokens;
+        this.writer = writer;
     }
 
     public boolean main() {
@@ -358,15 +367,35 @@ public class Parser {
     }
 
     public void traduz(String code){
-        System.out.print(code);
+        try {
+            if (writer != null)
+                writer.write(code);
+            else
+                System.out.print(code);
+        } catch (IOException e) {
+            System.err.println("Erro ao escrever no arquivo: " + e.getMessage());
+        }
     }
 
     public void header(){
-    System.out.println("use std::io;");
-    System.out.println("fn main() {");
+        try{
+            writer.write("use std::io;\n");
+            writer.write("fn main() {\n");
+        }catch (IOException e) {
+                System.err.println("Erro: " + e.getMessage());
+        }
+        
     }
   
     public void footer(){
         System.out.println("}");
+        if (writer != null) {
+            try {
+                writer.write("}");
+                writer.close();
+            } catch (IOException e) {
+                System.err.println("Erro:" + e.getMessage());
+            }
+        }
     }
 }
