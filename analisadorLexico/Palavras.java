@@ -9,7 +9,7 @@ public class Palavras extends AFD {
     // Lista de palavras reservadas da classe
     private static final List<String> reservadas = Arrays.asList(
     "receita", "pratopronto", "ingrediente", "tempero", "receitinha", "prove",
-    "sirva", "deguste", "tempere", "cozinhe_enquanto", "bata", "ferva"
+    "sirva", "deguste", "tempere", "cozinhe_enquanto", "bata", "ferva", "parar"
     );
 
     @Override
@@ -58,6 +58,9 @@ public class Palavras extends AFD {
                 }
                 else if (lexema.equals("ferva")){
                     return new Token("DO_WHILE", lexema);
+                }
+                else if (lexema.equals("parar")){
+                    return new Token("BREAK", lexema);
                 }
                
             } else {

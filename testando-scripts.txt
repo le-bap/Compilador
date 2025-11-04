@@ -4,6 +4,17 @@ ingrediente x = 0;
 cozinhe_enquanto (x < 9) {
     sirva({x});
     x = x + 1;
+    deguste (x == 4){
+        @comentario@
+        parar;
+    }
+}
+sirva("aqui vem o for");
+bata (y = 2; y <= 5){
+    deguste (y == 4){
+        sirva({y});
+        parar;
+    }
 }
 
 pratopronto

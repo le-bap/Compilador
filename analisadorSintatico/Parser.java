@@ -66,6 +66,7 @@ public class Parser {
         if (declarar()) return true;
         if (atribuir()) return true;
         if (comentario()) return true;
+        if (parar()) return true;
         return false;
     }
 
@@ -117,9 +118,16 @@ public class Parser {
     }
 
     private boolean comentario(){
-        traduz("// ");
-        if (matchT("COMMENT", token.lexema)){
-            traduz("\n");
+        String comentario = token.lexema;
+        if (matchT("COMMENT")){
+            traduz("//" +  comentario + "\n");
+            return true;
+        } 
+        return false;
+    }
+
+    private boolean parar(){
+        if (matchL("parar", "break") && matchL(";")){
             return true;
         } 
         return false;
@@ -161,7 +169,9 @@ public class Parser {
     private boolean cozinhe_enquanto() {
         if (matchL("cozinhe_enquanto", "while "))
         {
-            if (condicao() && matchL("{", "{\n") && codigo() && matchL("}", "}\n")) return true;
+            if (condicao() && matchL("{", "{\n")){
+                if (codigo() && matchL("}", "}\n")) return true;
+            } 
             erro("cozinhe_enquanto");
             return false;
         }
