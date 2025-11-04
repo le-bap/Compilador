@@ -1,0 +1,5 @@
+javac *.java
+java Traducao > main.rs
+Get-Content main.rs | Set-Content -Encoding utf8 main2.rs
+rustc main2.rs
+./main2.exe

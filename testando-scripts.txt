@@ -1,10 +1,9 @@
 receita
 
-bata (x = 0; x <= 10){
-    sirva("escreva o numero");
-    prove("%i" num);
-    sirva("seu numero eh ");
-    sirva({num});
+ingrediente x = 0;
+cozinhe_enquanto (x < 9) {
+    sirva({x});
+    x = x + 1;
 }
 
 pratopronto

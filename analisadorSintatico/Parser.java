@@ -159,9 +159,9 @@ public class Parser {
 
     // while
     private boolean cozinhe_enquanto() {
-        if (matchL("cozinhe_enquanto"))
+        if (matchL("cozinhe_enquanto", "while "))
         {
-            if (condicao() && matchL("{") && codigo() && matchL("}")) return true;
+            if (condicao() && matchL("{", "{\n") && codigo() && matchL("}", "}\n")) return true;
             erro("cozinhe_enquanto");
             return false;
         }
@@ -252,8 +252,6 @@ public class Parser {
                     erro("condicao");
                     return false; 
                 }
-                  
-                  
             }   
             erro("condicao");
             return false;
@@ -284,8 +282,9 @@ public class Parser {
     }
 
     private boolean tipos(){
-        return matchT("RESERVADA_INGREDIENTE", "let ") || matchT("RESERVADA_TEMPERO", "let ") ||
-         matchT("RESERVADA_RECEITINHA", "let ");
+        return matchT("RESERVADA_INGREDIENTE", "let mut ") || 
+        matchT("RESERVADA_TEMPERO", "let mut ") ||
+         matchT("RESERVADA_RECEITINHA", "let mut ");
     }
 
     private boolean id() {
