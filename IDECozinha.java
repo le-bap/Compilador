@@ -7,12 +7,16 @@ import java.io.*;
 import analisadorLexico.Lexer;
 import analisadorLexico.Token;
 import analisadorSintatico.Parser;
+import analisadorSintatico.Tree;
 
 public class IDECozinha extends JFrame {
     private JTextArea codigoArea;
     private JTextArea outputArea;
     private JButton traduzirButton;
     private JButton lexerButton;
+    private JButton arvoreButton;
+    private JScrollPane scrollCodigo;
+    private JScrollPane scrollOutput;
 
     public IDECozinha() {
         super("IDE da Linguagem Cozinha");
@@ -36,17 +40,26 @@ public class IDECozinha extends JFrame {
         lexerButton = new JButton("Lista de Tokens");
         lexerButton.addActionListener(this::listarTokens);
 
+        // botao de printar a arvore
+        arvoreButton = new JButton("Arvore de Derivacao");
+        arvoreButton.addActionListener(this::printarArvore);
+
+
         // painel pros botoes
         JPanel painelBotao = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         painelBotao.add(traduzirButton);
         painelBotao.add(lexerButton);
+        painelBotao.add(arvoreButton);
+
 
         // layout principal
+        JSplitPane divisaoPag = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollCodigo, scrollOutput);
+        divisaoPag.setDividerLocation(300);
+
         JPanel painel = new JPanel();
         painel.setLayout(new BorderLayout(5, 5));
         painel.add(painelBotao, BorderLayout.NORTH); 
-        painel.add(scrollCodigo, BorderLayout.CENTER);
-        painel.add(scrollOutput, BorderLayout.SOUTH);
+        painel.add(divisaoPag, BorderLayout.CENTER);
 
         add(painel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,11 +100,11 @@ public class IDECozinha extends JFrame {
 
             // gera parser
             Parser parser = new Parser(tokens, writer);
-            boolean sucesso = parser.main();
+            Tree sucesso = parser.main();
 
             writer.close();
 
-            if (sucesso) {
+            if (sucesso != null) {
                 outputArea.setText("Traducao gerada com sucesso em: " + arquivoSaida.getAbsolutePath());
             } else {
                 outputArea.setText("Erro durante a traducao.");
@@ -99,6 +112,26 @@ public class IDECozinha extends JFrame {
 
         } catch (Exception ex) {
             outputArea.setText("Erro na traducao:\n" + ex.getMessage());
+        }
+    }
+
+    private void printarArvore(ActionEvent e){
+        String codigo = codigoArea.getText();
+        try{
+            Lexer lexer = new Lexer(codigo);
+            List<Token> tokens = lexer.getTokens();
+
+            Parser parser = new Parser(tokens);
+            Tree tree = parser.main();
+
+            if (tree != null) {
+                outputArea.setText(tree.getRoot().getTree());
+            } else {
+                outputArea.setText("Erro ao gerar árvore.");
+            }
+
+        } catch (Exception ex) {
+            outputArea.setText("Erro: " + ex.getMessage());
         }
     }
 

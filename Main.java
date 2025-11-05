@@ -9,6 +9,7 @@ import java.util.List;
 import analisadorLexico.Lexer;
 import analisadorLexico.Token;
 import analisadorSintatico.Parser;
+import analisadorSintatico.Tree;
 
 public class Main {
   public static void main(String[] args) {
@@ -30,7 +31,8 @@ public class Main {
             System.out.println("\n\n");
             // gera o parser 
             Parser parser = new Parser(tokens);
-            parser.main();
+            Tree tree = parser.main();
+            tree.printTree();
 
 
         } catch (IOException e) {
