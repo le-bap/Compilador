@@ -23,6 +23,7 @@ public class IDECozinha extends JFrame {
         codigoArea = new JTextArea(19, 60);
         codigoArea.setFont(new Font("Arial", Font.PLAIN, 18));
         JScrollPane scrollCodigo = new JScrollPane(codigoArea);
+        carregarCodigo();
 
         // area de saida
         outputArea = new JTextArea(15, 60);
@@ -64,6 +65,14 @@ public class IDECozinha extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                salvarCodigo();
+            }
+        });
+
     }
     
     private void listarTokens(ActionEvent e){
@@ -132,6 +141,26 @@ public class IDECozinha extends JFrame {
             outputArea.setText("Erro: " + ex.getMessage());
         }
     }
+
+    private void salvarCodigo() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ultimo_codigo.txt"))) {
+            writer.write(codigoArea.getText());
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar codigo: " + e.getMessage());
+        }
+    }
+
+    private void carregarCodigo() {
+        File arquivo = new File("ultimo_codigo.txt");
+        if (arquivo.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))) {
+                codigoArea.read(reader, null);
+            } catch (IOException e) {
+                System.out.println("Nao foi possível carregar o codigo salvo");
+            }
+        }
+    }
+
 
 
     public static void main(String[] args) {

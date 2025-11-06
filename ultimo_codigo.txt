@@ -1,0 +1,22 @@
+receita
+
+ingrediente x = 0;
+cozinhe_enquanto (x < 9) {
+    sirva({x});
+    x = x + 1;
+    deguste (x == 4){
+        @comentario@
+        parar;
+    }
+}
+
+sirva("aqui vem o for");
+sirva("digite um numero");
+prove("%i" num2);
+bata (y = 2; y <= 5){
+    deguste (y == num2){
+        sirva({y});
+        parar;
+    }
+}
+pratopronto
