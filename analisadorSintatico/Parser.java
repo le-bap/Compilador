@@ -11,6 +11,7 @@ public class Parser {
     List<Token> tokens;
     Token token;
     private BufferedWriter writer;
+    private StringBuilder erros = new StringBuilder();
 
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
@@ -42,9 +43,25 @@ public class Parser {
     }
 
     private void erro(String regra) {
-        System.out.println("-------------- Regra: " + regra);
-        System.out.println("token invalido: " + token);
-        System.out.println("------------------------------\n");
+        String msg = "-------------- Regra: " + regra + "\n" +
+                 "token invalido: " + token + "\n" +
+                 "------------------------------\n";
+
+        erros.append(msg);
+
+        try {
+            if (writer != null){
+                writer.write(msg);
+            } else {
+                System.out.println(msg);
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao escrever no arquivo: " + e.getMessage());
+        }
+    }
+
+    public String getErros() { 
+        return erros.toString(); 
     }
 
     // FUNÇÃO MAIN

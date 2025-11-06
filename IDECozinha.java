@@ -15,8 +15,6 @@ public class IDECozinha extends JFrame {
     private JButton traduzirButton;
     private JButton lexerButton;
     private JButton arvoreButton;
-    private JScrollPane scrollCodigo;
-    private JScrollPane scrollOutput;
 
     public IDECozinha() {
         super("IDE da Linguagem Cozinha");
@@ -107,7 +105,7 @@ public class IDECozinha extends JFrame {
             if (sucesso != null) {
                 outputArea.setText("Traducao gerada com sucesso em: " + arquivoSaida.getAbsolutePath());
             } else {
-                outputArea.setText("Erro durante a traducao.");
+                outputArea.setText("Erros encontrados:\n\n" + parser.getErros());
             }
 
         } catch (Exception ex) {
