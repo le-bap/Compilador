@@ -1,26 +1,15 @@
 use std::io;
 fn main() {
-let mut x=0;
-while x<9{
+let mut x: i32;
+let mut y: f64;
+let mut a= String::new();
+x=19;
+y=3.5;
+a=String::from("teste");
+println!("{}","valor de x");
 println!("{}",x);
-x=x+1;
-if x==4 {
-//@comentario@
-break}}
-println!("{}","aqui vem o for");
-println!("{}","digite um numero");
-let mut num2 = String::new();
-io::stdin().read_line(&mut num2).expect("Falha ao ler a entrada");
-let num2: i32 = num2.trim().parse().expect("Valor inválido");
-for y in 2..=5 {
-if y==num2 {
+println!("{}","valor de y");
 println!("{}",y);
-break}}
-println!("{}","aqui vem o do while");
-let mut z=0;
-loop{println!("{}","teste");
-z=z+1;
-if z>5{
-break
+println!("{}","valor de a");
+println!("{}",a);
 }
-}}

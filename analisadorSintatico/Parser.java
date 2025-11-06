@@ -12,6 +12,7 @@ public class Parser {
     Token token;
     private BufferedWriter writer;
     private StringBuilder erros = new StringBuilder();
+    private boolean is_string;
 
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
@@ -139,15 +140,15 @@ public class Parser {
 
                         // ingrediente
                         if (tipo.equals("\"%i\"")) {
-                            traduz("let " + id + ": i32 = " + id + ".trim().parse().expect(\"Valor inválido\");\n");
+                            traduz("let mut " + id + ": i32 = " + id + ".trim().parse().expect(\"Valor inválido\");\n");
                         }
                         // tempero
                         else if (tipo.equals("\"%t\"")) {
-                            traduz("let " + id + ": f64 = " + id + ".trim().parse().expect(\"Valor inválido\");\n");
+                            traduz("let mut " + id + ": f64 = " + id + ".trim().parse().expect(\"Valor inválido\");\n");
                         }
                         // string
                         else {
-                            traduz("let " + id + " = " + id + ".trim().to_string();\n");
+                            traduz("let mut " + id + " = " + id + ".trim().to_string();\n");
                         }
 
                         if (matchL(")", prove) && matchL(";", prove)) return true;
@@ -254,8 +255,20 @@ public class Parser {
     // tipo id; ou tipo id = exp ;
     private boolean declarar(Node node) {
         Node declarar = node.addNode("declaracao");
+        String tipo = token.lexema;
         if (tipos(declarar) && id(declarar)){
-            if (matchL(";", ";\n", declarar)) return true;
+            if (matchL(";", declarar)){
+                if(tipo.equals("ingrediente")){
+                    traduz(": i32;\n");
+                } 
+                if(tipo.equals("tempero")) {
+                    traduz(": f64;\n");
+                }
+                if(tipo.equals("receitinha")) {
+                    traduz("= String::new();\n");
+                }
+                return true;
+            }
             
             if (matchL("=", "=", declarar))
             {
@@ -269,13 +282,18 @@ public class Parser {
         return false; 
     }
 
-    // tipo id = exp;
+    // id = exp;
     private boolean atribuir(Node node) {
         Node atribuir = node.addNode("atribuicao");
         if (id(atribuir)) 
         {
-            if (matchL("=", "=", atribuir) && exp(atribuir) &&
-             matchL(";", ";\n", atribuir)) return true;
+            if (matchL("=", "=", atribuir) && exp(atribuir)){
+                if (is_string){
+                    traduz(")");
+                }
+                if (matchL(";", ";\n", atribuir)) return true;
+            }
+             
             erro("atribuir");
             return false;
         }
@@ -295,7 +313,12 @@ public class Parser {
 
     private boolean termo(Node node) {
         Node termo = node.addNode("termo");
-        if (num(termo) || id(termo) || string(termo)) {
+        if (num(termo) || id(termo)) {
+            return true;
+        }
+        String texto = token.lexema;
+        if (stringSemTraducao(termo)){
+            traduz("String::from(" + texto);
             return true;
         }
         if (matchL("(", termo)) {
@@ -385,11 +408,19 @@ public class Parser {
 
     private boolean string(Node node) {
         Node string = node.addNode("string");
+        is_string = true;
         return matchT("RECEITINHA", token.lexema, string);
+    }
+
+    private boolean stringSemTraducao(Node node) {
+        Node string = node.addNode("string");
+        is_string = true;
+        return matchT("RECEITINHA", string);
     }
 
     private boolean num(Node node) {
         Node num = node.addNode("num");
+        is_string = false;
         return (matchT("TEMPERO", token.lexema, num) || matchT("INGREDIENTE", token.lexema, num));
     }
 
