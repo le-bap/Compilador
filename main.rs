@@ -8,8 +8,12 @@ if x==4 {
 //@comentario@
 break}}
 println!("{}","aqui vem o for");
+println!("{}","digite um numero");
+let mut num2 = String::new();
+io::stdin().read_line(&mut num2).expect("Falha ao ler a entrada");
+let num2: f64 = num2.trim().parse().expect("Valor inválido");
 for y in 2..=5 {
-if y==4 {
+if y==num2 {
 println!("{}",y);
 break}}
 println!("{}","aqui vem o do while");

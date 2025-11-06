@@ -11,8 +11,10 @@ cozinhe_enquanto (x < 9) {
 }
 
 sirva("aqui vem o for");
+sirva("digite um numero");
+prove("%i" num2);
 bata (y = 2; y <= 5){
-    deguste (y == 4){
+    deguste (y == num2){
         sirva({y});
         parar;
     }

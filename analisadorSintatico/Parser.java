@@ -128,14 +128,28 @@ public class Parser {
         {
             if (matchL("(", prove))
             {
+                String tipo = token.lexema;
                 if (matchT("TIPO_PROVE", prove)) 
                 {
-                    traduz("let mut ");
                     String id = token.lexema;
-                    if (id(prove))
+                    if (idBata(prove))
                     {
-                        traduz(" = String::new();\n");
+                        traduz("let mut " + id + " = String::new();\n");
                         traduz("io::stdin().read_line(&mut " + id + ").expect(\"Falha ao ler a entrada\");\n");
+
+                        // ingrediente
+                        if (tipo.equals("\"%i\"")) {
+                            traduz("let " + id + ": i32 = " + id + ".trim().parse().expect(\"Valor inválido\");\n");
+                        }
+                        // tempero
+                        else if (tipo.equals("\"%t\"")) {
+                            traduz("let " + id + ": f64 = " + id + ".trim().parse().expect(\"Valor inválido\");\n");
+                        }
+                        // string
+                        else {
+                            traduz("let " + id + " = " + id + ".trim().to_string();\n");
+                        }
+
                         if (matchL(")", prove) && matchL(";", prove)) return true;
                     }
                     erro("prove");
