@@ -31,6 +31,12 @@ public class OpComparacao extends AFD {
                     return new Token("OP_COMPARACAO", "==");
                 }
                 return new Token("ATRIBUICAO", "=");
+            case '!':
+                code.next();
+                if (code.current() == '=') {
+                    code.next();
+                    return new Token("OP_COMPARACAO", "!=");
+                }
 
             default:
                 return null;

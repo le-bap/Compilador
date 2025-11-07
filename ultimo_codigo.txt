@@ -1,11 +1,36 @@
 receita
+ingrediente escolha = 0;
 
-ingrediente x;
-tempero y;
-receitinha a;
+cozinhe_enquanto (escolha != 3) {
 
-x = 19;
-y = 3.5;
-a = "teste";
+    sirva("Escolha uma opcao:");
+    sirva("1 - Dizer Ola");
+    sirva("2 - Contar ate 5");
+    sirva("3 - Sair");
+    prove("%i" escolha);
+
+    deguste (escolha == 1) {
+        sirva("Ola, cozinheiro!");
+    }
+    tempere {
+        deguste (escolha == 2) {
+
+            bata (i = 1; i <= 5) {
+                sirva({i});
+            }
+
+        }
+        tempere {
+            deguste (escolha == 3) {
+                sirva("Saindo...");
+                parar;
+            }
+            tempere {
+                sirva("Opcao invalida!");
+            }
+        }
+    }
+
+}
 
 pratopronto
