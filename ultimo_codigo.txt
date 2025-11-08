@@ -36,7 +36,10 @@ cozinhe_enquanto(1 == 1){
               tempere{sirva("comando invalido");}
 }
 }
-
 }
+
+ingrediente numero = 2 * (3 + 4);
+sirva({numero});
+
 
 pratopronto

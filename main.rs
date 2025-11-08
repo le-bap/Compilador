@@ -38,4 +38,6 @@ println!("{}",result);
 println!("{}","parando..");
 break}else {println!("{}","comando invalido");
 }}}}
+let mut numero=2*(3+4);
+println!("{}",numero);
 }

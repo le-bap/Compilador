@@ -321,8 +321,8 @@ public class Parser {
             traduz("String::from(" + texto + ")");
             return true;
         }
-        if (matchL("(", termo)) {
-            if (exp(termo) && matchL(")", termo)) return true;
+        if (matchL("(", "(", termo)) {
+            if (exp(termo) && matchL(")", ")", termo)) return true;
             return false; 
         }
         return false;
