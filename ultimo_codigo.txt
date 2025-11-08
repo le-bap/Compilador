@@ -1,35 +1,41 @@
 receita
-ingrediente escolha = 0;
 
-cozinhe_enquanto (escolha != 3) {
+ingrediente  limite;
+sirva("Digite um num limite");
+prove("%i" limite);
 
-    sirva("Escolha uma opcao:");
-    sirva("1 - Dizer Ola");
-    sirva("2 - Contar ate 5");
-    sirva("3 - Sair");
-    prove("%i" escolha);
+sirva("Contando de 1 ate o limite");
+bata (i = 1; i <= limite){
+   deguste(i % 5 == 0){
+       sirva("Numero multiplo de 5");
+       sirva({i});
+   }
+   tempere{ sirva({i}); } 
+}
 
-    deguste (escolha == 1) {
-        sirva("Ola, cozinheiro!");
-    }
-    tempere {
-        deguste (escolha == 2) {
+sirva("agora vamos fazer um menu interativo");
 
-            bata (i = 1; i <= 5) {
-                sirva({i});
-            }
-
-        }
-        tempere {
-            deguste (escolha == 3) {
-                sirva("Saindo...");
-                parar;
-            }
-            tempere {
-                sirva("Opcao invalida!");
-            }
-        }
-    }
+receitinha comando;
+cozinhe_enquanto(1 == 1){
+    sirva("digite um comando (info, parar ou somar)");
+    prove("%r" comando);
+    
+    deguste (comando == "info"){ sirva("sabia q o ceu eh azul"); }
+    tempere{
+         deguste(comando == "somar"){
+             sirva("digite o primeiro numero decimal");
+             tempero num1;
+             prove("%t" num1);
+             sirva("digite o segundo numero");
+             tempero num2;
+             prove("%t" num2);
+             tempero result = num1 + num2;
+             sirva({result});
+         } tempere {
+              deguste (comando == "parar"){ sirva("parando.."); parar;}
+              tempere{sirva("comando invalido");}
+}
+}
 
 }
 

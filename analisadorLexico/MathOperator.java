@@ -19,6 +19,9 @@ public class MathOperator extends AFD{
             case '/':
                 code.next();
                 return new Token("OP_ARITMETICO", "/");
+            case '%':
+                code.next();
+                return new Token("OP_ARITMETICO", "%");
             
             case CharacterIterator.DONE: // fim do arquivo
                 return new Token("EOF", "$");

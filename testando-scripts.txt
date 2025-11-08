@@ -1,30 +1,76 @@
 receita
 
-ingrediente x = 0;
-cozinhe_enquanto (x < 9) {
-    sirva({x});
-    x = x + 1;
-    deguste (x == 4){
-        @comentario@
-        parar;
+sirva("Bem-vindo ao Sistema de Receitas!");
+sirva("Digite seu nome:");
+receitinha nome;
+prove("%r" nome);
+
+sirva("Ola, ");
+sirva({nome});
+
+sirva("Quantas receitas voce deseja ver?");
+ingrediente total;
+prove("%i" total);
+
+bata (i = 1; i <= total) {
+    sirva("Escolha uma opcao:");
+    sirva("1 - Bolo");
+    sirva("2 - Salada");
+    sirva("3 - Sair");
+    ingrediente opcao;
+    prove("%i" opcao);
+
+    deguste (opcao == 1) {
+        sirva("Voce escolheu BOLO!");
+        sirva("Quantas fatias deseja?");
+        ingrediente fatias;
+        prove("%i" fatias);
+
+        cozinhe_enquanto (fatias > 0) {
+            sirva("Servindo uma fatia...");
+            fatias = fatias - 1;
+
+            deguste (fatias == 0){
+                sirva("Acabaram as fatias!");
+            }
+        }
+    }
+
+    tempere {
+        deguste (opcao == 2) {
+            sirva("Voce escolheu SALADA!");
+            sirva("Deseja adicionar molho? (sim ou nao)");
+            receitinha resposta;
+            prove("%r" resposta);
+
+            deguste (resposta == "sim") {
+                sirva("Molho adicionado!");
+            }
+            tempere {
+                sirva("Sem molho, ok.");
+            }
+        }
+
+        tempere {
+            deguste (opcao == 3) {
+                sirva("Encerrando o cardapio...");
+                parar;
+            }
+
+            tempere {
+                sirva("Opcao invalida, tente novamente.");
+            }
+        }
     }
 }
 
-sirva("aqui vem o for");
-sirva("digite um numero");
-prove("%i" num2);
-bata (y = 2; y <= 5){
-    deguste (y == num2){
-        sirva({y});
-        parar;
-    }
-}
+sirva("Agora vamos contar ate 5 usando WHILE:");
+ingrediente contador = 0;
 
-sirva("aqui vem o do while");
-ingrediente z = 0;
-ferva {
-sirva("teste");
-z = z + 1;
-} cozinhe_enquanto (z > 5)
+cozinhe_enquanto (contador <= 5) {
+    sirva({contador});
+    contador = contador + 1;
+} 
 
+sirva("Programa finalizado!");
 pratopronto

@@ -318,7 +318,7 @@ public class Parser {
         }
         String texto = token.lexema;
         if (stringSemTraducao(termo)){
-            traduz("String::from(" + texto);
+            traduz("String::from(" + texto + ")");
             return true;
         }
         if (matchL("(", termo)) {
@@ -332,8 +332,8 @@ public class Parser {
         Node condicao = node.addNode("condicao");
         if (matchL("(", condicao))
         {
-            if (id(condicao) && operador(condicao) && num(condicao) && matchL(")", condicao)) return true;
-            if (num(condicao) && operador(condicao) && id(condicao) && matchL(")", condicao)) return true;
+            if (exp(condicao) && operador(condicao) && exp(condicao) && matchL(")", condicao)) return true;
+            if (id(condicao) && operador(condicao) && id(condicao) && matchL(")", condicao)) return true;
             if (id(condicao) && matchL(")", condicao)) return true;
             erro("condicao");
             return false;
@@ -348,7 +348,7 @@ public class Parser {
             if (id(condicao) && matchL("=", " in ", condicao)){
                 if (num(condicao) && matchL(";", condicao))
                 {
-                    if (idBata(condicao) && operadorBata(condicao) && num(condicao) && matchL(")", condicao)) return true;
+                    if (idBata(condicao) && operadorBata(condicao) && (num(condicao) || id(condicao)) && matchL(")", condicao)) return true;
                     if (num(condicao) && operadorBata(condicao) && idBata(condicao) && matchL(")", condicao)) return true;
                     erro("condicao");
                     return false; 
