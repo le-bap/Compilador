@@ -177,7 +177,7 @@ public class Parser {
     }
 
     private boolean parar(Node node){
-        Node parar = node.addNode("´parar");
+        Node parar = node.addNode("parar");
         if (matchL("parar", "break", parar) && matchL(";", parar)){
             return true;
         } 
